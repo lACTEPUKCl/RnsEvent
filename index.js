@@ -242,7 +242,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
       }
       const modal = new ModalBuilder()
         .setCustomId(`register_modal_${selectedTeam}_${eventId}`)
-        .setTitle("Регистрация на турнир");
+        .setTitle("Регистрация на ивент");
       const steamIdInput = new TextInputBuilder()
         .setCustomId("steamid_input")
         .setLabel("Введите ваш Steam ID или ссылку на профиль")
