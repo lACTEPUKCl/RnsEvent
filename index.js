@@ -313,7 +313,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
       }
       const steamApiKey = process.env.STEAM_API_KEY;
       const steamIdRaw = interaction.fields.getTextInputValue("steamid_input");
-      const steamId = await getSteamId64(steamApiKey, steamIdRaw);
+      const userFromSteam = await getSteamId64(steamApiKey, steamIdRaw);
+      const steamId = userFromSteam.steamId;
+
       if (!steamId)
         return interaction.reply({
           content: messages.errorExecuting + " Неверный Steam ID.",
@@ -350,9 +352,18 @@ client.on(Events.InteractionCreate, async (interaction) => {
         interaction.fields.getTextInputValue("tech_squad_input");
       const pilotSquad =
         interaction.fields.getTextInputValue("pilot_squad_input");
-      const squadHours =
+      let squadHoursRaw =
         interaction.fields.getTextInputValue("squad_hours_input");
+      let squadHours = squadHoursRaw.replace(/\D/g, "");
+      if (squadHours.length > 5) {
+        squadHours = squadHours.substring(0, 5) + "...";
+      }
       const numberPlayers = 1;
+
+      if (userFromSteam.squadHours) {
+        squadHours = parseInt(userFromSteam.squadHours, 10);
+      }
+
       if (selectedTeam === "substitutes") {
         if (!currentEvent.substitutes) currentEvent.substitutes = [];
         currentEvent.substitutes.push({
