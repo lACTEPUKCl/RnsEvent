@@ -176,6 +176,21 @@ client.on(Events.InteractionCreate, async (interaction) => {
           }
         );
         await updateEventEmbed(client, currentEvent);
+
+        if (interaction.guild) {
+          try {
+            const member = await interaction.guild.members.fetch(
+              interaction.user.id
+            );
+            if (member) {
+              await member.roles.remove(process.env.EVENTROLEID);
+              console.log(`Роль удалена у пользователя ${interaction.user.id}`);
+            }
+          } catch (err) {
+            console.error("Ошибка при удалении роли:", err);
+          }
+        }
+
         return interaction.reply({
           content: messages.registrationCancelled,
           flags: MessageFlags.Ephemeral,
@@ -375,6 +390,18 @@ client.on(Events.InteractionCreate, async (interaction) => {
         }
       );
       await updateEventEmbed(client, currentEvent);
+      if (interaction.guild) {
+        try {
+          const member = await interaction.guild.members.fetch(userId);
+          if (member) {
+            await member.roles.add(process.env.EVENTROLEID);
+            console.log(`Роль выдана пользователю ${userId}`);
+          }
+        } catch (err) {
+          console.error("Ошибка при выдаче роли:", err);
+        }
+      }
+
       return interaction.reply({
         content: messages.registrationSuccess(selectedTeam),
         flags: MessageFlags.Ephemeral,
