@@ -43,7 +43,7 @@ export const updateEventEmbed = async (client, event) => {
                   member.techSquad &&
                   member.techSquad.toLowerCase() === "да"
                 ) {
-                  prefix = "⚙️";
+                  prefix += "⚙️";
                 }
                 if (
                   member.squadLeader &&
@@ -52,8 +52,8 @@ export const updateEventEmbed = async (client, event) => {
                   prefix += "⭐";
                 }
                 if (
-                  member.squadLeader &&
-                  member.squadLeader.toLowerCase() === "да"
+                  member.pilotSquad &&
+                  member.pilotSquad.toLowerCase() === "да"
                 ) {
                   prefix += "🚁";
                 }
