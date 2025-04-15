@@ -37,7 +37,7 @@ const execute = async (interaction) => {
   }
 
   const embed = new EmbedBuilder()
-    .setTitle("Регистрация на турнир")
+    .setTitle("Регистрация на ивент")
     .setColor("#3498DB")
     .addFields(
       { name: `Команда 1 (0/${maxPlayersPerTeam})`, value: "-", inline: true },
